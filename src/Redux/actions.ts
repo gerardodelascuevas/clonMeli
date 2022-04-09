@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export function getProducts(search: string){
+export function getProducts(search: string){   
     return async function (dispatch: Function){
         try{
         const theProduct = await axios(`https://api.mercadolibre.com/sites/MLA/search?q=${search}`) 
