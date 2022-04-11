@@ -1,5 +1,6 @@
 const initialState = {
     theProduct: [], 
+    detail: []
 }
 export default function rootReducer(state = initialState, action: any){
     switch(action.type){
@@ -7,6 +8,11 @@ export default function rootReducer(state = initialState, action: any){
             return{
                 ...state, 
                 theProduct: action.payload
+            }
+        case "GET_DETAILS":         
+            return {
+                ...state, 
+                detail: action.payload
             }
 
 

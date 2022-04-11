@@ -8,6 +8,7 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../Redux/actions';
 import { AiOutlineShoppingCart } from "react-icons/ai"
+import { useMediaQuery } from '@mui/material';
 
 
 const useStyles = makeStyles({
@@ -22,31 +23,21 @@ const useStyles = makeStyles({
     input: {
          width: '40%',
          height: '2.4rem',
-         backgroundColor: 'white',
-        // marginBottom: '115%', 
-        // marginLeft: '-15%',
-        // borderRadius: '4px', 
-        
+         backgroundColor: 'white',        
     }, 
     img: {
          width: '8rem', 
-        // marginLeft: '-25%', 
-        // marginTop: '1rem'
     }, 
     location: {
-        // marginTop: '-119%',
-        // marginRight: '60%',
 
     }, 
     span: {
-        // marginLeft: '-8rem',
         "&:hover":{
             cursor: 'pointer'
         }
     }, 
     search: {
-         backgroundColor: 'white',
-        // position: 'absolute',  
+         backgroundColor: 'white', 
          borderRadius: '4px',      
             "&:hover":{
                 cursor: 'pointer'
@@ -60,6 +51,8 @@ const useStyles = makeStyles({
 
 export default function Navbar(){
     const clases = useStyles()
+   
+    const isMatch = useMediaQuery('(min-width: 992px)') 
 
     const dispatch = useDispatch()
 
@@ -74,8 +67,40 @@ export default function Navbar(){
     }
 
     return (
-        <div className={clases.nav}>        
+        <div >    
+
+      { !isMatch ? 
+        <div className={clases.nav}>     
+        <div className={clases.location}>
+           <img src={logo} className={clases.img}/> 
+           <div style={{marginLeft: '-4rem'}}>
+           <div className={clases.span}>        
+               <LocationOnIcon style={{color: 'gray', marginLeft: '0.5rem'}}/>                    
+               <span style={{color: 'black', fontSize:'12px'}}>  Ingresa tu <br/> Código Postal </span>
+               </div>
+              
+           </div>   
            
+       </div> 
+       <Input 
+       style={{width: '60%'}}
+       onChange={e=> handleChange(e.target.value)} className={clases.input} placeholder='Buscar productos, marcas y más... '/>
+       <form onSubmit={()=> handleAskProduct(input)}> 
+       <SearchIcon onClick={()=> handleAskProduct(input)} className={clases.search} style={{height: '2.4rem', }}/>           
+       </form>
+      {/* <DraftsIcon  style={{color: 'gray'}}/>            
+      <span style={{color: 'gray'}}> Novedades de temporada a un click </span>
+      
+       <div className={clases.cart}  style={{display: 'flex'}}>               
+          <span style={{margin: '0.5rem'}}> Crea tu cuenta </span>
+          <span style={{margin: '0.5rem'}}> Ingresa </span>
+          <span style={{margin: '0.5rem'}}> Mis compras </span>
+          <AiOutlineShoppingCart style={{margin: '0.5rem'}} />
+
+      </div> */}
+      
+   </div>  
+        :   <div className={clases.nav}>     
              <div className={clases.location}>
                 <img src={logo} className={clases.img}/> 
                 <div style={{marginLeft: '-4rem'}}>
@@ -102,6 +127,9 @@ export default function Navbar(){
                <AiOutlineShoppingCart style={{margin: '0.5rem'}} />
 
            </div>
+           
+        </div>
+      }
         </div>
     )
 }
